@@ -7,6 +7,7 @@ using OnlineLibrary.Data;
 using OnlineLibrary.Data.Seeder;
 using OnlineLibrary.Helper;
 using OnlineLibrary.Model;
+using OnlineLibrary.Repository;
 using System.Security.Claims;
 using System.Text;
 namespace OnlineLibrary
@@ -98,8 +99,19 @@ namespace OnlineLibrary
                 option.RouteBasePath = "/profiler";
                 option.ColorScheme = StackExchange.Profiling.ColorScheme.Dark;
             }).AddEntityFramework();
-            var app = builder.Build();
 
+            builder.Services.AddScoped<IBookRepositroy, BookRepository>();
+            builder.Services.AddCors(options =>
+            {
+                options.AddPolicy("AllowAll", builder =>
+                {
+                    builder.AllowAnyOrigin()
+                           .AllowAnyMethod()
+                           .AllowAnyHeader();
+                });
+            });
+            var app = builder.Build();
+            // data seeder
             using (var scope = app.Services.CreateScope())
             {
                 var services = scope.ServiceProvider;
@@ -114,8 +126,9 @@ namespace OnlineLibrary
             }
             if (app.Environment.IsDevelopment())
             {
-                app.UseSwagger();
-                app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "My API V1"));
+               app.UseSwagger();
+                app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "API v1"));
+
             }
 
             app.UseHttpsRedirection();
