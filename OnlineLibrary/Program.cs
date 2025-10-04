@@ -101,6 +101,7 @@ namespace OnlineLibrary
             }).AddEntityFramework();
 
             builder.Services.AddScoped<IBookRepositroy, BookRepository>();
+            builder.Services.AddScoped<ICategoryRepo, CategoryRepo>();
             builder.Services.AddCors(options =>
             {
                 options.AddPolicy("AllowAll", builder =>

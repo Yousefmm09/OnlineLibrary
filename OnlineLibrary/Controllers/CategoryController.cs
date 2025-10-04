@@ -5,6 +5,7 @@ using Microsoft.Extensions.Caching.Memory;
 using OnlineLibrary.Data;
 using OnlineLibrary.Dto;
 using OnlineLibrary.Model;
+using OnlineLibrary.Repository;
 using System.Diagnostics;
 
 namespace OnlineLibrary.Controllers
@@ -14,28 +15,23 @@ namespace OnlineLibrary.Controllers
     public class CategoryController : ControllerBase
     {
         private readonly OBDbcontext _dbcontext;
+        private readonly ICategoryRepo _categoryRepo;
         private readonly IMemoryCache _cache;
-        public CategoryController(OBDbcontext dbcontext,IMemoryCache cache)
+        public CategoryController(OBDbcontext dbcontext,IMemoryCache cache , ICategoryRepo categoryRepo)
         {
             _dbcontext = dbcontext;
             _cache = cache;
+            _categoryRepo = categoryRepo;
         }
         [HttpPost("AddCategory")]
         public async Task<IActionResult> AddCategory([FromBody]AddCategoryDto addCategory)
         {
-            var name = _dbcontext.Categories.FirstOrDefault(x => x.Name==addCategory.Name);
-            if (name ==null)
+            if (ModelState.IsValid)
             {
-                var category = new Category
-
-                {
-                    Name= addCategory.Name,
-                };
-                await  _dbcontext.Categories.AddAsync(category);
-                await  _dbcontext.SaveChangesAsync();
+              await  _categoryRepo.AddCategoryAsync(addCategory);
+                return Ok("the category is added successfully");
             }
-            else { return BadRequest("the category is found"); }
-            return Ok("the book is added");
+            return BadRequest(ModelState);
         }
         [HttpGet("getAllBookinCategory/{id}")]
         public async Task<IActionResult> GetAllBookinCategory(int id)
@@ -45,34 +41,18 @@ namespace OnlineLibrary.Controllers
                 var category =  await _dbcontext.Categories.FindAsync(id);
                 if(category!=null)
                 {
-                    var book = await _dbcontext.Books.Where(x => x.CategoryId == id)
-                        .Select(x => new GetAllBookinCategoryDto()
-                        {
-                            Title = x.Title,
-                            Author=x.Author,
-                            Price=x.Price,
-                            ISBN=x.ISBN,
-                            Stock=x.Stock,
-                            Description=x.Description,
-                        }).ToListAsync();
-                    return Ok(book);
+                    await _categoryRepo.GetAllBookinCategory(id);
                 }
             }
             return BadRequest();
         }
         [HttpDelete("delete-category")]
-        public IActionResult DeleteCategory(int id)
+        public  async Task<IActionResult> DeleteCategory(int id)
         {
             if(ModelState.IsValid)
             {
-                var category= _dbcontext.Categories.Find(id);
-                if(category!=null)
-                {
-                    _dbcontext.Categories.Remove(category);
-                    _dbcontext.SaveChanges();
+                   await _categoryRepo.DeleteCategoryAsync(id);
                     return Ok("the category is deleted");
-                }
-                return BadRequest("the category is not found");
             }
             return BadRequest(ModelState);
         }
@@ -81,18 +61,10 @@ namespace OnlineLibrary.Controllers
         {
             if (!_cache.TryGetValue("Category", out object state))
             {
-                //var category = await _dbcontext.Categories.Select(x => new
-                //{
-                //    x.Name
-                //}).ToListAsync();
-                var car = await _dbcontext.Categories
-                .Select(x => new
-                {
-                    x.Name
-                }).ToListAsync();
+                var categories = await _categoryRepo.GetAllCategoriesAsync();
                 state = new
                 {
-                    Category = car
+                    Category = categories
                 };
                 _cache.Set("Category", state, TimeSpan.FromHours(1));
             }
