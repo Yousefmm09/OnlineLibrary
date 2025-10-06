@@ -1,7 +1,4 @@
-﻿using OnlineLibrary.Dto;
-using OnlineLibrary.Model;
-
-namespace OnlineLibrary.Repository
+﻿namespace OnlineLibrary.Repository
 {
     public   interface IBookRepositroy
     {
@@ -10,6 +7,8 @@ namespace OnlineLibrary.Repository
         Task AddBookAsync(AddBookDto book);
         Task EditBook( int id ,EditBookDto book);
         Task DeleteBookAsync(int id);
-        Task<IEnumerable<Book>> SearchBooksAsync(string searchTerm);
+        Task<IEnumerable<SearchBookDto>> SearchBooksAsync(SearchBookDto searchTerm);
+        Task <object> GetPaginationParametersAsync(PaginationParameters pagination);
+        Task<BookRatingDto> GetRatingParametersAsync(string userId,BookRatingDto bookRating);
     }
 }

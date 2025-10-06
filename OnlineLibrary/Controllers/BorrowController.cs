@@ -1,19 +1,4 @@
-﻿using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Http.HttpResults;
-using Microsoft.AspNetCore.Identity;
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
-using OnlineLibrary.Data;
-using OnlineLibrary.Dto;
-using OnlineLibrary.Helper;
-using OnlineLibrary.Model;
-using System.Reflection.Metadata.Ecma335;
-using System.Security.Claims;
-using System.Threading.Tasks;
-using static System.Reflection.Metadata.BlobBuilder;
-
-namespace OnlineLibrary.Controllers
+﻿namespace OnlineLibrary.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]

@@ -1,0 +1,25 @@
+﻿global using Microsoft.AspNetCore.Authorization;
+global using Microsoft.AspNetCore.Http;
+global using Microsoft.AspNetCore.Http.HttpResults;
+global using Microsoft.AspNetCore.Identity;
+global using Microsoft.AspNetCore.Mvc;
+global using Microsoft.AspNetCore.RateLimiting;
+global using Microsoft.EntityFrameworkCore;
+global using Microsoft.Extensions.Caching.Memory;
+global using OnlineLibrary.Data;
+global using OnlineLibrary.Dto;
+global using OnlineLibrary.Helper;
+global using OnlineLibrary.Model;
+global using OnlineLibrary.Repository;
+global using System.Collections.Generic;
+global using System.Linq;
+global using System.Reflection.Metadata.Ecma335;
+global using System.Threading.Tasks;
+global using Microsoft.AspNetCore.Authentication.JwtBearer;
+global using Microsoft.IdentityModel.Tokens;
+global using Microsoft.OpenApi.Models;
+global using OnlineLibrary.Data.Seeder;
+global using StackExchange.Profiling;
+global using System.Security.Claims;
+global using System.Text;
+

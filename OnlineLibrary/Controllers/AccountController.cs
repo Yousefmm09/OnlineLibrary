@@ -1,19 +1,8 @@
-﻿using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Http.HttpResults;
-using Microsoft.AspNetCore.Identity;
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
-using OnlineLibrary.Data;
-using OnlineLibrary.Dto;
-using OnlineLibrary.Helper;
-using OnlineLibrary.Model;
-using System.Threading.Tasks;
-
-namespace OnlineLibrary.Controllers
+﻿namespace OnlineLibrary.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
+   
     public class AccountController : ControllerBase
     {
         private readonly OBDbcontext _dbcontext;

@@ -1,14 +1,4 @@
-﻿using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.Caching.Memory;
-using OnlineLibrary.Data;
-using OnlineLibrary.Dto;
-using OnlineLibrary.Model;
-using OnlineLibrary.Repository;
-using System.Diagnostics;
-
-namespace OnlineLibrary.Controllers
+﻿namespace OnlineLibrary.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]

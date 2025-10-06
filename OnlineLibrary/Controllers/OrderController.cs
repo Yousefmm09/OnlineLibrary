@@ -1,12 +1,4 @@
-﻿using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Identity;
-using Microsoft.AspNetCore.Mvc;
-using OnlineLibrary.Data;
-using OnlineLibrary.Dto;
-using OnlineLibrary.Model;
-
-namespace OnlineLibrary.Controllers
+﻿namespace OnlineLibrary.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
